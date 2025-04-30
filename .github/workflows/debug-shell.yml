@@ -1,0 +1,30 @@
+name: Debug Shell Session
+
+on:
+  workflow_dispatch:  # allows manual trigger via GitHub UI
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest  # Debian-based
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Print runner info
+      run: |
+        echo "Runner OS: $(uname -a)"
+        echo "User: $(whoami)"
+        echo "Hostname: $(hostname)"
+
+    # Optional: Simulate a failing step (uncomment to test)
+    # - name: Simulate failure
+    #   run: exit 1
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      # Uncomment below to run only on failure:
+      # if: failure()
+
+    - name: Done
+      run: echo "Job finished"
